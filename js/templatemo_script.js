@@ -62,11 +62,18 @@ jQuery(function($) {
 
 function initialize() {
     var mapOptions = {
-      zoom: 12,
-      center: new google.maps.LatLng(16.8451789,96.1439764)
+      zoom: 15,
+      center: new google.maps.LatLng(42.358987,-71.093581)
     };
 
     var map = new google.maps.Map(document.getElementById('map-canvas'),  mapOptions);
+    
+    // To add the marker to the map, use the 'map' property
+    var marker = new google.maps.Marker({
+        position: new google.maps.LatLng(42.357116,-71.101381),
+        map: map,
+        title:"Simmons Hall"
+    });
 }
 
 // scroll animation 
