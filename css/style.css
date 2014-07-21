@@ -30,14 +30,28 @@
 }
 .blogItem_Date {
 }
-.blogItem_thumbnail {
-	width: 75%;
+.blogItem_thumbnailContainer {	
 	-webkit-border-radius: 3px !important;
     -moz-border-radius: 3px !important;
     border-radius: 3px !important;
 
-    display: block;
+	text-align: center;
+
+	padding: 0px;
+
+	overflow: hidden;
+	max-height: 400px;
+
     margin-bottom: 8px;
+}
+.blogItem_thumbnail {
+	-webkit-border-radius: 3px !important;
+    -moz-border-radius: 3px !important;
+    border-radius: 3px !important;
+
+	width: 75%;
+
+    display: inline;
 }
 .blogItem_Excerpt {
 	text-align: justify;

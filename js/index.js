@@ -46,7 +46,7 @@ var Index = ( function() {
 						.append( $('<span>').addClass('blogItem_Date').text( formattedDate ) )
 				);
 				if ( post['thumbnail'] ) {
-					container.append( $('<img>').addClass('blogItem_thumbnail').attr('src', post['thumbnail'] ) );
+					container.append( $('<div>').addClass('blogItem_thumbnailContainer').append( $('<img>').addClass('blogItem_thumbnail').attr('src', post['thumbnail'] ) ) );
 				}
 				container.append( $('<div>').addClass('blogItem_Excerpt').html( post['excerpt'] ) );
 				container.append( $('<a>').addClass('blogItem_ReadMore').attr('href', post['url']).text("Read More") );
