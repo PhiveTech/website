@@ -20,8 +20,7 @@ var Index = ( function() {
 				$('<p>').addClass('errorText').text( "Recent blog posts could not be loaded.  We're sorry for the inconvenience." )
 			);
 		}
-		$.get('./wordpress/?json=get_recent_posts&count=2', function( json ) {
-			console.log( json );
+		$.getJSON( './wordpress/?json=get_recent_posts&count=2', function( json ) {
 			if ( json.status !== "ok" ) {
 				errorLoading();
 			}
@@ -32,9 +31,7 @@ var Index = ( function() {
 				}
 
 				/* Convert date to javascript object: */
-				console.log( post['date'] );
 				var postDate = new Date( post['date'] );
-				console.log( postDate );
 				var formattedDate = formatDate( postDate );
 
 				var container = $('<div>').addClass('col-lg-6').addClass('blogItem_Container');
@@ -61,12 +58,56 @@ var Index = ( function() {
 		})
 	}
 
+	function showAndFade( box, msg ) {
+		box.hide();
+		box.empty().html( msg );
+		box.fadeIn( 200, function() {
+			setTimeout( function() {
+				box.fadeOut( 1000 );
+			}, 3000 );
+		});
+	}
+
+	function setUpContactForm() {
+		$('.contactUs').each( function() {
+			var name = $(this).find('.txtName');
+			var email = $(this).find('.txtEmail');
+			var message = $(this).find('.txtMessage');
+			var submit = $(this).find('.btnSend');
+			var error = $(this).find('.contactErrorMessage');
+			error.empty();
+			submit.unbind('click').click( function() {
+				$.post( './email/index.php', { "from": email.val(), "name": name.val(), "message": message.val() }, function( msg ) {
+					var json;
+					try {
+						json = JSON.parse( msg );
+					} catch( e ) {
+						json = { "success": false, "msg": "Could not parse response: " + msg };
+					}
+					if ( ! json.success ) {
+						showAndFade( error, json.msg );
+						return;
+					}
+					name.val("");
+					email.val("");
+					message.val("");
+					showAndFade( error, "Your message was sent!" );
+				}).fail( function( err ) {
+					console.error( err );
+					showAndFade( error, "Could not send email." );
+				});
+			});
+		});
+	}
+
 	/* Return exports: */
 	return {
+		setUpContactForm: setUpContactForm,
 		updateRecentPosts: updateRecentPosts
 	};
 } )();
 
 $( function() {
+	Index.setUpContactForm();
 	Index.updateRecentPosts();
 } );

@@ -44,3 +44,7 @@
 }
 
 /* End blog items */
+
+.contactErrorMessage {
+	font-style: italic;
+}
