@@ -1,3 +1,7 @@
+.team_hr {
+	width: 35% !important;
+}
+
 .img-lounge {
     -webkit-border-radius: 3px !important;
     -moz-border-radius: 3px !important;
@@ -40,7 +44,7 @@
 	padding: 0px;
 
 	overflow: hidden;
-	max-height: 400px;
+	max-height: 300px;
 
     margin-bottom: 8px;
 }
@@ -61,4 +65,8 @@
 
 .contactErrorMessage {
 	font-style: italic;
+}
+
+.member-thumb .thumb-overlay {
+	padding-left: 0px !important;
 }
