@@ -13,7 +13,7 @@
     text-transform:uppercase;
 }
 
-/* Blog Items: */
+/* Blog Preview Items: */
 
 .blogItem_Title {
 	text-transform:uppercase;
@@ -61,7 +61,7 @@
 	text-align: justify;
 }
 
-/* End blog items */
+/* End blog preview items */
 
 .contactErrorMessage {
 	font-style: italic;
@@ -69,4 +69,14 @@
 
 .member-thumb .thumb-overlay {
 	padding-left: 0px !important;
+}
+
+.underlay {
+	background-color: rgba( 0,0,0, 0.25 );
+	-webkit-border-radius: 15px !important;
+    -moz-border-radius: 15px !important;
+    border-radius: 15px !important;
+
+    display: inline-block;
+    padding: 5px;
 }

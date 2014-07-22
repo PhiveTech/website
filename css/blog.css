@@ -1,0 +1,106 @@
+.backgroundOverride {
+	background: url('../images/spa.jpg') no-repeat center center fixed !important;
+	background-size: 100% !important;
+	background-position: center 0 !important;
+
+	height: 350px !important;
+
+	overflow: hidden;
+}
+
+.blog-item {
+	padding-bottom: 35px;
+	padding-top: 20px;
+}
+.positionOverride {
+	bottom: 200px !important;
+}
+
+.blog-title {
+	display: block;
+	font-size: 22px !important;
+	float: none !important;
+}
+.blog-tag {
+	display: block;
+	font-size: 14px !important;
+	float: none !important;
+}
+.blog-content {
+	text-align: justify !important;
+	line-height: 1.5;
+	font-size: 14px;
+}
+.blog-read-more {
+	text-align: center;
+}
+.blog-thumb-container.preview > img {
+	max-width: 300px;
+	max-height: 200px;
+
+	-webkit-border-radius: 5px !important;
+    -moz-border-radius: 5px !important;
+    border-radius: 5px !important;
+
+    margin: 10px;
+}
+.blog-thumb-container > img {
+	max-width: 500px;
+	max-height: 300px;
+
+	-webkit-border-radius: 10px !important;
+    -moz-border-radius: 10px !important;
+    border-radius: 10px !important;
+
+    margin: 20px;
+}
+.overrideMargins {
+	margin-top: 30px !important;
+	margin-bottom: 20px !important;
+}
+#sidebar {
+	padding: 40px;
+	padding-bottom: 100px;
+
+	text-align: center;
+
+	-webkit-border-bottom-right-radius: 20px !important;
+	-webkit-border-bottom-left-radius: 20px !important;
+	-moz-border-radius-bottomright: 20px !important;
+	-moz-border-radius-bottomleft: 20px !important;
+	border-bottom-right-radius: 20px !important;
+	border-bottom-left-radius: 20px !important;
+
+	/*-webkit-box-shadow: -3px 6px 43px 1px rgba(0,0,0,0.75);
+	-moz-box-shadow: -3px 6px 43px 1px rgba(0,0,0,0.75);
+	box-shadow: -3px 6px 43px 1px rgba(0,0,0,0.75);*/
+
+	background: url('../images/squares.png');
+}
+#posts {
+	padding-bottom: 40px;
+	text-align: center;
+}
+
+.blog-container {
+}
+.templatemo-tweets {
+	margin-top: 0px !important;
+}
+
+div.horizontalRule {
+    clear:both;
+    width:60%;
+    background-color:#d1d1d1;
+    height:1px;
+    margin-top:5px;
+    margin-bottom:5px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#sidebar > div {
+	margin-bottom: 20px;
+	font-size: 15px;
+	line-height: 2;
+}

@@ -19,6 +19,20 @@ var Index = ( function() {
 	  return array;
 	}
 
+	var regParts = /^[a-zA-Z]+:\/\/[^\/?]*(.*)$/;
+	function adaptURL( url ) {
+		var match = regParts.exec( url );
+		if ( ! match ) {
+			return url;
+		}
+		return match[1];
+	}
+
+	var toFind = "http://localhost";
+	function adaptURLinContext( context ) {
+		return context.replace( toFind, "" );
+	}
+
 	var shortMonths = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
 	function formatDate( jsDate ) {
 		var out = "";
@@ -82,7 +96,7 @@ var Index = ( function() {
 
 				var container = $('<div>').addClass('col-lg-6').addClass('blogItem_Container');
 				container.append( $('<h3>').addClass('blogItem_Title').append(
-					$('<a>').attr('href', post['url']).text( post['title'] ) 
+					$('<a>').attr('href', adaptURL( post['url'] ) ).text( post['title'] ) 
 				) );
 				container.append( 
 					$('<div>').addClass('blogItem_AuthorDate')
@@ -92,10 +106,10 @@ var Index = ( function() {
 						.append( $('<span>').addClass('blogItem_Date').text( formattedDate ) )
 				);
 				if ( post['thumbnail'] ) {
-					container.append( $('<div>').addClass('blogItem_thumbnailContainer').append( $('<img>').addClass('blogItem_thumbnail').attr('src', post['thumbnail'] ) ) );
+					container.append( $('<div>').addClass('blogItem_thumbnailContainer').append( $('<img>').addClass('blogItem_thumbnail').attr('src', adaptURL( post['thumbnail'] ) ) ) );
 				}
-				container.append( $('<div>').addClass('blogItem_Excerpt').html( post['excerpt'] ) );
-				container.append( $('<a>').addClass('blogItem_ReadMore').attr('href', post['url']).text("Read More") );
+				container.append( $('<div>').addClass('blogItem_Excerpt').html( adaptURLinContext( post['excerpt'] ) ) );
+				container.append( $('<a>').addClass('blogItem_ReadMore').attr('href', adaptURL( post['url'] ) ).text("Read More") );
 				divRecentPosts.append( container );
 
 				printed += 1;
@@ -165,14 +179,10 @@ var Index = ( function() {
 		var template = "<li class=\"col-lg-3 col-md-3 col-sm-6 \"><div class=\"text-center\"><div class=\"member-thumb\"><img class=\"img-responsive rounded\" alt=\"{NAME}\"/><a><div class=\"thumb-overlay\"><span class=\"team-inner-overlay-text\">Get to know me!</span></div></a></div><div class=\"team-inner\"><div class=\"team-inner-header\"></div><div class=\"team-inner-subtext\"></div></div></div></li>"
 		var addMember = function( post ) {
 			var member = $(template);
-			var img = post['thumbnail'] || "./images/noprof.png";
+			var img = ( post['thumbnail'] ) ? adaptURL( post['thumbnail'] ) : "./images/noprof.png";
 			var memberThumb = member.find('.member-thumb');
 			member.find('.member-thumb > img').attr( 'src', img ).attr( 'alt', post['title'] ).load( function() {
 				/* Stretches picture to fill square */
-				console.log( this.width );
-				console.log( this.height );
-				console.log( this.width / this.height );
-				console.log( BOX_WIDTH / BOX_HEIGHT );
 				if ( this.width / this.height > BOX_WIDTH / BOX_HEIGHT ) {
 					$( this ).css( 'width', 'auto' )
 						.css( 'height', '100%' )
@@ -180,8 +190,9 @@ var Index = ( function() {
 				}
 			});;
 			member.find('.team-inner-header').text( post['title'] );
-			member.find('.team-inner-subtext').html( post['excerpt'] );
-			member.find('.member-thumb > a').attr( 'href', post['url'] );
+			member.find('.team-inner-subtext').html( adaptURLinContext( post['excerpt'] ) );
+			console.log( post['url'] );
+			member.find('.member-thumb > a').attr( 'href', adaptURL( post['url'] ) );
 			members.push( member );
 		}
 
@@ -266,6 +277,7 @@ var Index = ( function() {
 		updateRecentPosts: updateRecentPosts,
 		updateMembers: updateMembers
 	};
+
 } )();
 
 $( function() {

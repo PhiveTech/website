@@ -23,6 +23,9 @@ jQuery(function($) {
 
         // scroll to specific id when click on menu
         $('.templatemo-top-menu .navbar-nav a').click(function(e){
+            if ( $(this).attr('href').charAt(0) !== '#' ) {
+                return;
+            }
             e.preventDefault(); 
             var linkId = $(this).attr('href');
             scrollTo(linkId);

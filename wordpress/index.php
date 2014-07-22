@@ -6,6 +6,26 @@
  * @package WordPress
  */
 
+ini_set('display_errors', 'On');
+error_reporting(E_ALL);
+
+require_once( __DIR__ . "/../config.php" );
+
+if ( ! isset( $_GET['feed'] ) && ! isset( $_GET['json'] ) ) {
+	$path = getRootPath() . "/blog";
+	$joiner = "?";
+	if ( isset( $_GET['p'] ) ) {
+		$path .= $joiner . "p=" . urlencode( $_GET['p'] );
+		$joiner = "&";
+	}
+	if ( isset( $_GET['author'] ) ) {
+		$path .= $joiner . "author=" .urlencode( $_GET['author'] );
+		$joiner = "&";
+	}
+	header( "Location: " . $path );
+	die();
+}
+
 /**
  * Tells WordPress to load the WordPress theme and output it.
  *
