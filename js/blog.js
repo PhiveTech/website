@@ -6,6 +6,8 @@ var Blog = ( function() {
 	var rootUrl;
 	var thisPath;
 
+	var useMembers;
+
 	function init() {
 		if ( GET_P === undefined || typeof GET_P !== 'string' ) {
 			throw new Error( "GET_P not specified." );
@@ -20,6 +22,14 @@ var Blog = ( function() {
 		updateRecentPosts();
 
 		var sep = "?";
+
+		useMembers = false;
+		if ( GET_MEMBERS.length > 0 ) {
+			thisPath += sep + "members=" + encodeURIComponent( GET_MEMBERS );
+			sep = "&";
+			useMembers = true;
+		}
+
 		if ( GET_P.length > 0 ) {
 			initPage( GET_P );
 			thisPath += sep + "p=" + encodeURIComponent( GET_P );
@@ -224,7 +234,7 @@ var Blog = ( function() {
 		var numberPerPage = NUMBER_PER_PAGE;
 
 		function condition( post ) {
-			return ! containsCategory( post, "members" )
+			return ( containsCategory( post, "members" ) === useMembers )
 				&& ( ! options.author || post.author.slug === options.author );
 		}
 

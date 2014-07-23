@@ -19,7 +19,11 @@ if ( ! isset( $_GET['feed'] ) && ! isset( $_GET['json'] ) ) {
 		$joiner = "&";
 	}
 	if ( isset( $_GET['author'] ) ) {
-		$path .= $joiner . "author=" .urlencode( $_GET['author'] );
+		$path .= $joiner . "author=" . urlencode( $_GET['author'] );
+		$joiner = "&";
+	}
+	if ( isset( $_GET['members'] ) ) {
+		$path .= $joiner . "members=" . urlencode( $_GET['members'] );
 		$joiner = "&";
 	}
 	header( "Location: " . $path );

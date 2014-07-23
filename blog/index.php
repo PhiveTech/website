@@ -191,6 +191,7 @@
         <?php
             echo phpVariToJS( $_GET['p'], "GET_P" );
             echo phpVariToJS( $_GET['author'], "GET_AUTHOR" );
+            echo phpVariToJS( $_GET['members'], "GET_MEMBERS" );
             echo phpVariToJS( getHost(), "HOST" );
             echo phpVariToJS( getRootPath(), "ROOT_PATH" );
         ?>
