@@ -4,7 +4,7 @@ require_once(__DIR__ . '/../config.php');
 
 function ipLog() {
     // Create connection
-    $con = mysqli_connect("localhost", getMySQLUser(), getMySQLPass(), "spam");
+    $con = mysqli_connect("localhost", getMySQLUser(), getMySQLPass(), getMySQLDB());
     
     // Check connection
     if (mysqli_connect_errno()) {
@@ -37,7 +37,7 @@ function ipLog() {
 /* SELECT `time` FROM `ip` WHERE `time` > DATE_SUB( NOW(), INTERVAL 30 MINUTE ) LIMIT 1 */
 function ipCheck() {
     // Create connection
-    $con = mysqli_connect("localhost", getMySQLUser(), getMySQLPass(), "spam");
+    $con = mysqli_connect("localhost", getMySQLUser(), getMySQLPass(), getMySQLDB());
     
     // Check connection
     if (mysqli_connect_errno()) {
@@ -138,7 +138,7 @@ if (isset($_POST["from"])) {
     // message lines should not exceed 70 characters (PHP rule), so wrap it
     $message = wordwrap($message, 70);
     // send mail
-    mail("kkleidal@gmail.com", $subject, $message, "From: $from\n");
+    mail(getDestinationEmail(), $subject, $message, "From: $from\n");
     ipLog();
     success("sent");
 } else {
