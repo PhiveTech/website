@@ -16,8 +16,8 @@
 <html lang="en">
     <head>
         <title>Simmons Phive Alpha | Blog</title>
-        <meta name="keywords" content="urbanic, responsive, bootstrap, fluid layout, orange, white, free website template, templatemo" />
-		<meta name="description" content="Simmons Phive Alpha is a " />
+        <meta name="keywords" content="dorm, mit, massachusetts, engineering, eecs, cs, computer science, programming, servers, massachusetts institute of technology, prefrosh, simmons, lounges, simmons hall, rush, recruitment, events, hackathon" />
+		<meta name="description" content="Simmons Phive Alpha:  A whacky group of engineering and science students living in the world's most porous dormitory" />
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" type="image/png" href="../images/logo.png">
