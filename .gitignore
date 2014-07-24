@@ -2,3 +2,4 @@
 wordpress/wp-config.php
 wordpress/wp-content/uploads
 config.php
+*.htaccess
