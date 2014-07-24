@@ -96,12 +96,12 @@ var Index = ( function() {
 
 				var container = $('<div>').addClass('col-lg-6').addClass('blogItem_Container');
 				container.append( $('<h3>').addClass('blogItem_Title').append(
-					$('<a>').attr('href', adaptURL( post['url'] ) ).text( post['title'] ) 
+					$('<a>').attr('href', adaptURL( post['url'] ) ).html( post['title'] ) 
 				) );
 				container.append( 
 					$('<div>').addClass('blogItem_AuthorDate')
 						.append( "by ")
-						.append( $('<span>').addClass('blogItem_Author').text( post['author']['name'] ) )
+						.append( $('<span>').addClass('blogItem_Author').html( post['author']['name'] ) )
 						.append( " on ")
 						.append( $('<span>').addClass('blogItem_Date').text( formattedDate ) )
 				);
@@ -191,7 +191,7 @@ var Index = ( function() {
 				}
 			});;
 			member.find('.thumb-overlay').unbind('hover').hover( hoverIn, hoverOut );
-			member.find('.team-inner-header').text( post['title'] );
+			member.find('.team-inner-header').html( post['title'] );
 			member.find('.team-inner-subtext').html( adaptURLinContext( post['excerpt'] ) );
 			member.find('.member-thumb > a').attr( 'href', adaptURL( post['url'] ) );
 			members.push( member );

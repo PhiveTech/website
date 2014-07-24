@@ -65,7 +65,7 @@ var Blog = ( function() {
 			for ( var i = 0; i < posts.length && i < numPosts; ++ i ) {
 				container.append(
 					$('<div>').append(
-						$('<a>').attr( 'href', adaptURL( posts[i].url ) ).text( posts[i].title ),
+						$('<a>').attr( 'href', adaptURL( posts[i].url ) ).html( posts[i].title ),
 						' by ',
 						MakeLink.author( posts[i].author ),
 						' on ',
@@ -102,7 +102,7 @@ var Blog = ( function() {
 	var MakeLink = ( function() { 
 
 		function author( authorObj ) {
-			return $('<a>').attr('href', './?author=' + encodeURIComponent( authorObj.slug ) ).text( authorObj.name );
+			return $('<a>').attr('href', './?author=' + encodeURIComponent( authorObj.slug ) ).html( authorObj.name );
 		}
 
 		/* Return exports: */
@@ -360,11 +360,11 @@ var Blog = ( function() {
 		}
 		if ( fullContent ) {
 			blogItem.thumb.removeClass('preview');
-			blogItem.title.text( post.title );
+			blogItem.title.html( post.title );
 			blogItem.content.empty().append( adaptURLinContext( post.content ) ).after( Social.generate( thisPath, $('title').text() ) );
 		} else {
 			blogItem.thumb.addClass('preview');
-			blogItem.title.empty().append( $('<a>').attr('href', adaptURL( post.url ) ).text( post.title ) );
+			blogItem.title.empty().append( $('<a>').attr('href', adaptURL( post.url ) ).html( post.title ) );
 			blogItem.readMore.find('a').attr('href', adaptURL( post.url ) );
 			blogItem.content.empty().append( adaptURLinContext( post.excerpt ) ).after( blogItem.readMore );
 		}
