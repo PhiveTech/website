@@ -6,6 +6,8 @@ var Blog = ( function() {
 	var rootUrl;
 	var thisPath;
 
+	var ajaxLoader;
+
 	var useMembers;
 
 	function init() {
@@ -18,6 +20,8 @@ var Blog = ( function() {
 		thisPath = rootUrl.concat( "/blog" );
 
 		$('.shareBlog').empty().append( Social.generate( thisPath, $('title').text() ) );
+
+		ajaxLoader = $('.ajax-loader-container > img').hide();
 
 		updateRecentPosts();
 
@@ -112,7 +116,8 @@ var Blog = ( function() {
 		'conditionFunc' a function returning a boolean
 		'increment' an integer (how many posts to fetch with each get)
 		'startPage' an integer (which page to start on) 
-		'p' a page id for requesting a single page */
+		'p' a page id for requesting a single page 
+		'loadedPostsSet' an object with post.id: true for every post which is currently loaded */
 	function getPosts( options, callback ) {
 		if ( ! options ) {
 			options = {};
@@ -141,14 +146,13 @@ var Blog = ( function() {
 			this.error = new Error( msg );
 		}
 
-		var loadedPosts = {};
+		var loadedPosts = options.loadedPostsSet || {};
 
 		function getMorePosts( page ) {
 			var query = '../wordpress/?json=get_recent_posts&count=' + encodeURIComponent( options.increment.toString() ) + "&page=" + encodeURIComponent( page.toString() );
 			if ( options.page ) {
 				query = '../wordpress/?p=' + encodeURIComponent( options.page ) + '&json=1';
 			}
-			console.log( query );
 			$.getJSON( query, function( json ) {
 				if ( json.status !== "ok" ) {
 					if ( json.error && json.error === "Not found" ) {
@@ -169,19 +173,16 @@ var Blog = ( function() {
 				}
 				if ( json.posts.length === 0 ) {
 					/* All the posts that are going to be found have been found */
-					console.log( "here 1" );
 					callback( null, posts );
 					return;
 				}
 				json.posts.forEach( function( post ) {
 					if ( ! loadedPosts.hasOwnProperty( post.id ) && post.status === "publish" && options.conditionFunc( post ) ) {
-						console.log( post );
 						loadedPosts[ post.id ] = true; 
 						posts.push( post );
 					}
 				});
 				if ( posts.length >= options.goalNumber ) {
-					console.log( "here" );
 					callback( null, posts );
 					return;
 				}
@@ -224,6 +225,14 @@ var Blog = ( function() {
 
 	}
 
+	function toggleLoadingIcon( toggle ) {
+		if ( toggle ) {
+			ajaxLoader.show();
+		} else {
+			ajaxLoader.hide();
+		}
+	}
+
 	var NUMBER_PER_PAGE = 10;
 	function initBlog( options ) {
 		if ( ! options ) {
@@ -250,21 +259,66 @@ var Blog = ( function() {
 				&& ( ! options.author || post.author.slug === options.author );
 		}
 
-		getPosts( { 'goalNumber': numberPerPage, 'startPage': 0, 'conditionFunc': condition }, function( err, posts ) {
-			if ( err ) {
-				handlerError( err );
+		/* Infinite scroll: */
+		$(function(){
+			$(window).scroll(function(){
+				var aTop = divPosts.position().top + divPosts.height();
+				if($(this).scrollTop()>=aTop){
+					requestMore();
+				}
+			});
+		});
+
+		var loading = false;
+		var noMoreToLoad = false;
+		function requestMore() {
+			if ( loading || noMoreToLoad ) {
 				return;
 			}
-			shuffle( posts );
-			for ( var i = 0; i < posts.length && i < numberPerPage; ++ i ) {
-				var blogItem = newBlogItem();
-				updateBlogItem( blogItem, posts[i], false );
-				if ( i > 0 ) {
-					divPosts.append( $('<div>').addClass('horizontalRule') );
+			loading = true;
+			toggleLoadingIcon( true );
+			loadMorePosts( function( err, numLoaded ) {
+				toggleLoadingIcon( false );
+				if ( err ) {
+					console.error( err );
+					return;
 				}
-				divPosts.append( blogItem.jquery );
+				if ( numLoaded === 0 ) {
+					noMoreToLoad = true;
+				}
+				loading = false;
+			});
+		}
+
+		var loadedPosts = {};
+		var currentPage = 0;
+		function loadMorePosts( callback ) {
+			if ( ! callback ) {
+				callback = function( err ) {
+					if ( err ){
+						handlerError( err );
+					}
+				}
 			}
-		});
+			getPosts( { 'goalNumber': numberPerPage, 'startPage': currentPage, 'conditionFunc': condition, 'loadedPostsSet': loadedPosts }, function( err, posts ) {
+				if ( err ) {
+					callback( err );
+					return;
+				}
+				if ( useMembers ) {
+					shuffle( posts );
+				}
+				++ currentPage;
+				for ( var i = 0; i < posts.length && i < numberPerPage; ++ i ) {
+					var blogItem = newBlogItem();
+					updateBlogItem( blogItem, posts[i], false );
+					divPosts.append( $('<div>').addClass('horizontalRule') );
+					divPosts.append( blogItem.jquery );
+				}
+				callback( null, posts.length );
+			});
+		}
+		requestMore();
 	}
 
 	/* Function taken from:  http://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array */

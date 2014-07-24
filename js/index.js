@@ -192,7 +192,6 @@ var Index = ( function() {
 			member.find('.thumb-overlay').unbind('hover').hover( hoverIn, hoverOut );
 			member.find('.team-inner-header').text( post['title'] );
 			member.find('.team-inner-subtext').html( adaptURLinContext( post['excerpt'] ) );
-			console.log( post['url'] );
 			member.find('.member-thumb > a').attr( 'href', adaptURL( post['url'] ) );
 			members.push( member );
 		}

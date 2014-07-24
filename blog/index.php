@@ -148,6 +148,8 @@
 
 
                     <div id="post_container"></div>
+
+                    <div class="ajax-loader-container"><img src="../images/ajax-loader2.gif" style="display:none;"/></div>
                 </div>
 
                 <div id="sidebar" class="col-xs-12 col-sm-6 col-lg-4">
