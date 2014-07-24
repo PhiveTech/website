@@ -189,6 +189,7 @@ var Index = ( function() {
 						.css( 'max-width', 'none' );
 				}
 			});;
+			member.find('.thumb-overlay').unbind('hover').hover( hoverIn, hoverOut );
 			member.find('.team-inner-header').text( post['title'] );
 			member.find('.team-inner-subtext').html( adaptURLinContext( post['excerpt'] ) );
 			console.log( post['url'] );
@@ -208,6 +209,20 @@ var Index = ( function() {
 			clearMembers();
 		}
 
+		var hover = false;
+		var onOut;
+		function hoverIn() {
+			hover = true;
+		}
+		function hoverOut() {
+			hover = false;
+			if ( onOut ) {
+				var temp = onOut;
+				onOut = undefined;
+				setTimeout( temp, 1000 );
+			}
+		}
+
 		var batch = 0;
 		function endDisplay() {
 			++ batch;
@@ -221,6 +236,10 @@ var Index = ( function() {
 			var fadeInterval = Math.round( FADE_TIME / 2 );
 			var currentBatch = batch;
 			function nextGroup() {
+				if ( hover ) {
+					onOut = nextGroup;
+					return;
+				}
 				if ( currentBatch !== batch ) {
 					return;
 				}
@@ -235,6 +254,7 @@ var Index = ( function() {
 					for ( var i = currentGroup * GROUP_SIZE; i < maxIndex; ++ i ) {
 						parent.append( members[i] );
 					}
+					$('.thumb-overlay').unbind('hover').hover( hoverIn, hoverOut );
 					parent.fadeIn( fadeInterval, function() {
 						if ( numGroups > 1 ) {
 							setTimeout( nextGroup, WAIT_TIME );
