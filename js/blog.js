@@ -352,7 +352,10 @@ var Blog = ( function() {
 		return out;
 	}
 	function updateBlogItem( blogItem, post, fullContent ) {
-		blogItem.tag.append( "by ", MakeLink.author( post.author ), " on ", formatDate( new Date( post.date ) ) );
+		blogItem.tag.empty();
+		if ( ! containsCategory( post, "members" ) ) {
+			blogItem.tag.append( "by ", MakeLink.author( post.author ), " on ", formatDate( new Date( post.date ) ) );
+		}
 		if ( post['thumbnail'] ) {
 			blogItem.thumb.empty().append( $('<img>').attr( 'src', adaptURL( post['thumbnail' ] ) ) );
 		} else {
