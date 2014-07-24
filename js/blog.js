@@ -196,7 +196,9 @@ var Blog = ( function() {
 
 	function initPage( page ) {
 		var blogItem = newBlogItem();
-		$('#posts').empty().append( blogItem.jquery );
+
+		var divPostsContainer = $('#posts');
+		divPostsContainer.find('#post_container').empty().append( blogItem.jquery );;
 
 		function handlerError( err ) {
 			console.error( err );
@@ -208,8 +210,12 @@ var Blog = ( function() {
 				handlerError( err );
 				return;
 			}
+			var isMember = ( !! posts[0] ) && containsCategory( posts[0], "members" );
+			divPostsContainer.find('#btnBack').append( isMember ? " Members" : " Blog" ).click( function() {
+				window.location.href = "./" + ( isMember ? "?members=1" : "" );
+			});
 			if ( posts.length === 0 ) {
-				handlerError( new Error('No matchingn posts.') );
+				handlerError( new Error('No matching posts.') );
 				return;
 			}
 			$('title').append( " | ", posts[0].title );
@@ -224,7 +230,13 @@ var Blog = ( function() {
 			options = {};
 		}
 
-		var divPosts = $('#posts').empty();
+		var divPostsContainer = $('#posts');
+		divPostsContainer.find('.page_title > h2').text( useMembers ? "Members" : "Blog" );
+		var divPosts = divPostsContainer.find('#post_container').empty();
+
+		divPostsContainer.find('#btnBack').append( " Home").click( function() {
+			window.location.href = "../";
+		});
 
 		function handlerError( err ) {
 			console.error( err );

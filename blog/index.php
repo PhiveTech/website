@@ -132,8 +132,22 @@
 
         <div class="blog-container">
             <div id="blog-section" class="row">
+
                 <div id="posts" class="col-xs-12 col-sm-6 col-lg-8">
 
+                    <div class="blog-item container page-blog-heading">
+                        <button id="btnBack" type="button" class="btn btn-default btn-lg">
+                            <span class="glyphicon glyphicon-arrow-left"></span> Back
+                        </button>
+                        <div class="row templatemo-line-header noMargins text-center">
+                            <span class="txt_darkgrey uppercase page_title"><h2></h2></span>
+                        </div>
+
+                        <div class="clearfix"></div>
+                    </div>
+
+
+                    <div id="post_container"></div>
                 </div>
 
                 <div id="sidebar" class="col-xs-12 col-sm-6 col-lg-4">
