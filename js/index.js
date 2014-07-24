@@ -179,6 +179,7 @@ var Index = ( function() {
 		var template = "<li class=\"col-lg-3 col-md-3 col-sm-6 \"><div class=\"text-center\"><div class=\"member-thumb\"><img class=\"img-responsive rounded\" alt=\"{NAME}\"/><a><div class=\"thumb-overlay\"><span class=\"team-inner-overlay-text\">Get to know me!</span></div></a></div><div class=\"team-inner\"><div class=\"team-inner-header\"></div><div class=\"team-inner-subtext\"></div></div></div></li>"
 		var addMember = function( post ) {
 			var member = $(template);
+			member.__post_id__ = post['id'];
 			var img = ( post['thumbnail'] ) ? adaptURL( post['thumbnail'] ) : "./images/noprof.png";
 			var memberThumb = member.find('.member-thumb');
 			member.find('.member-thumb > img').attr( 'src', img ).attr( 'alt', post['title'] ).load( function() {
@@ -222,14 +223,22 @@ var Index = ( function() {
 			}
 		}
 
+
+		function shallowCopy( arr ) {
+			return arr.map( function( el ) { return el; } );
+		}
+
 		var batch = 0;
 		function endDisplay() {
 			++ batch;
 		}
 		function initDisplay() {
+			var membersCopy = shallowCopy( members );
+
 			endDisplay();
 			parent.empty();
 			shuffle( members );
+			shuffle( membersCopy );
 			currentGroup = -1;
 			var numGroups = Math.ceil( members.length / GROUP_SIZE );
 			var fadeInterval = Math.round( FADE_TIME / 2 );
@@ -245,13 +254,27 @@ var Index = ( function() {
 				++ currentGroup;
 				if ( currentGroup >= numGroups ) {
 					shuffle( members );
+					shuffle( membersCopy );
 					currentGroup = 0;
 				}
 				parent.fadeOut( fadeInterval, function() {	
 					parent.empty();
 					var maxIndex = ( currentGroup + 1 ) * GROUP_SIZE;
-					for ( var i = currentGroup * GROUP_SIZE; i < maxIndex; ++ i ) {
+					var numAdded = 0;
+					var idsAdded = {};
+					for ( var i = currentGroup * GROUP_SIZE; i < maxIndex && i < members.length; ++ i ) {
 						parent.append( members[i] );
+						idsAdded[ members[i].__post_id__ ] = true;
+						++ numAdded;
+					}
+					if ( numAdded < GROUP_SIZE ) {
+						for ( var i2 = 0; i2 < membersCopy.length && numAdded < GROUP_SIZE; ++ i2 ) {
+							if ( ! idsAdded[ membersCopy[i2].__post_id__ ] ) {
+								parent.append( membersCopy[i2] );
+								idsAdded[ membersCopy[i2].__post_id__ ] = true;
+								++ numAdded;
+							}
+						}
 					}
 					$('.thumb-overlay').unbind('hover').hover( hoverIn, hoverOut );
 					parent.fadeIn( fadeInterval, function() {
