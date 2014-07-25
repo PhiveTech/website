@@ -36,6 +36,12 @@
 	margin-top: 15px;
 	margin-bottom: 30px;
 }
+.blog-content img {
+	-webkit-border-radius: 12px !important;
+    -moz-border-radius: 12px !important;
+    border-radius: 12px !important;
+    margin: 12px;
+}
 .blog-read-more {
 	text-align: center;
 }

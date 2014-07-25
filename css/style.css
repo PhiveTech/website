@@ -122,3 +122,16 @@ iframe {
 	.team_hr_right:before { content: '\A'; }
 	.team_hr_right:after { content: '\A'; }
 }
+
+/* Wordpress adaptation: */
+.alignright {
+	float: right;
+}
+.alignleft {
+	float: left;
+}
+.aligncenter {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
