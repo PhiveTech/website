@@ -44,6 +44,21 @@ var Index = ( function() {
 		}
 		return out;
 	}
+	var reDate = /([0-9]{4})-([0-9]{2})-([0-9]{2}) ([0-9]{2}):([0-9]{2}):([0-9]{2})/;
+	function parseDate( wpDate ) {
+		var match = reDate.exec( wpDate );
+		if ( ! match ) {
+			return null;
+		}
+		var date;
+		try {
+			date = new Date( parseInt( match[1], 10 ), parseInt( match[2], 10 ), parseInt( match[3], 10 ),
+				parseInt( match[4], 10 ), parseInt( match[5], 10 ), parseInt( match[6], 10 ) );
+		} catch ( e ) {
+			date = null;
+		}
+		return date;
+	}
 
 
 	var excludeCategories = { "members": true };
@@ -91,7 +106,7 @@ var Index = ( function() {
 				}
 
 				/* Convert date to javascript object: */
-				var postDate = new Date( post['date'] );
+				var postDate = parseDate( post['date'] );
 				var formattedDate = formatDate( postDate );
 
 				var container = $('<div>').addClass('col-lg-6').addClass('blogItem_Container');

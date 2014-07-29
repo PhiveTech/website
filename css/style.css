@@ -2,6 +2,10 @@
 	width: 35% !important;
 }
 
+.templatemo-line-header span {
+	float: none !important;
+}
+
 .img-lounge {
     -webkit-border-radius: 15px !important;
     -moz-border-radius: 15px !important;
@@ -132,6 +136,6 @@ iframe {
 }
 .aligncenter {
 	display: block;
-	margin-left: auto;
-	margin-right: auto;
+	margin-left: auto !important;
+	margin-right: auto !important;
 }

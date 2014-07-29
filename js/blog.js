@@ -1,5 +1,5 @@
 var Blog = ( function() {
-	var template = '<div class="blog-item"><div class="container"><div class="row"><div class="templatemo-line-header overrideMargins"><div class="text-center"><span class="txt_darkgrey uppercase blog-title"></span><span class="blog-tag"></span><div class="blog-thumb-container"></div></div></div></div><div class="clearfix"></div><div class="text-center blog-content"></div><div class="clearfix"></div></div></div>';
+	var template = '<div class="blog-item"><div><div class="row"><div class="templatemo-line-header overrideMargins"><div class="text-center"><span class="txt_darkgrey uppercase blog-title"></span><span class="blog-tag"></span><div class="blog-thumb-container"></div></div></div></div><div class="clearfix"></div><div class="text-center blog-content"></div><div class="clearfix"></div></div></div>';
 	
 	var host;
 	var rootPath;
@@ -69,7 +69,7 @@ var Blog = ( function() {
 						' by ',
 						MakeLink.author( posts[i].author ),
 						' on ',
-						formatDate( new Date( posts[i].date ) )
+						formatDate( parseDate( posts[i].date ) )
 					)
 				);
 			}
@@ -342,6 +342,9 @@ var Blog = ( function() {
 
 	var shortMonths = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
 	function formatDate( jsDate ) {
+        if ( ! jsDate ) {
+        	return "";
+        }
 		var out = "";
 		out = out.concat( shortMonths[ jsDate.getMonth() ] );
 		out = out.concat( " ", jsDate.getDate().toString() );
@@ -351,10 +354,25 @@ var Blog = ( function() {
 		}
 		return out;
 	}
+	var reDate = /([0-9]{4})-([0-9]{2})-([0-9]{2}) ([0-9]{2}):([0-9]{2}):([0-9]{2})/;
+	function parseDate( wpDate ) {
+		var match = reDate.exec( wpDate );
+		if ( ! match ) {
+			return null;
+		}
+		var date;
+		try {
+			date = new Date( parseInt( match[1], 10 ), parseInt( match[2], 10 ), parseInt( match[3], 10 ),
+				parseInt( match[4], 10 ), parseInt( match[5], 10 ), parseInt( match[6], 10 ) );
+		} catch ( e ) {
+			date = null;
+		}
+		return date;
+	}
 	function updateBlogItem( blogItem, post, fullContent ) {
 		blogItem.tag.empty();
 		if ( ! containsCategory( post, "members" ) ) {
-			blogItem.tag.append( "by ", MakeLink.author( post.author ), " on ", formatDate( new Date( post.date ) ) );
+			blogItem.tag.append( "by ", MakeLink.author( post.author ), " on ", formatDate( parseDate( post.date ) ) );
 		}
 		if ( post['thumbnail'] ) {
 			blogItem.thumb.empty().append( $('<img>').attr( 'src', adaptURL( post['thumbnail' ] ) ) );

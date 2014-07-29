@@ -135,7 +135,7 @@
 
                 <div id="posts" class="col-xs-12 col-sm-6 col-lg-8">
 
-                    <div class="blog-item container page-blog-heading">
+                    <div class="blog-item page-blog-heading">
                         <button id="btnBack" type="button" class="btn btn-default btn-lg">
                             <span class="glyphicon glyphicon-arrow-left"></span> Back
                         </button>

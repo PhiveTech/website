@@ -35,6 +35,9 @@
 
 	margin-top: 15px;
 	margin-bottom: 30px;
+
+    padding-left: 10px;
+    padding-right: 10px;
 }
 .blog-content img {
 	-webkit-border-radius: 12px !important;

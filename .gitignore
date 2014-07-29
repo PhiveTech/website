@@ -4,3 +4,6 @@ wordpress/wp-content/uploads
 config.php
 *.htaccess
 uptime.php
+
+gitignored
+gitignored/*
