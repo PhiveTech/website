@@ -51,6 +51,8 @@
     
     <body>
 
+        <?php include_once( __DIR__ . '/../analyticstracking.php' ); ?>
+
         <div class="templatemo-top-bar" id="templatemo-top">
             <div class="container">
                 <div class="subheader">
