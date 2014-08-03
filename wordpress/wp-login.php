@@ -856,6 +856,10 @@ default:
 ?>
 
 <form name="loginform" id="loginform" action="<?php echo esc_url( site_url( 'wp-login.php', 'login_post' ) ); ?>" method="post">
+	<div style="text-align:center;">
+		<input type="button" name="wp-cert-login" id="wp-cert-login" class="button button-primary button-large" value="Log in with certificates" style="float:none; margin-bottom: 10px;"/>
+		<p style="margin-bottom:10px;">or</p>
+	</div>
 	<p>
 		<label for="user_login"><?php _e('Username') ?><br />
 		<input type="text" name="log" id="user_login" class="input" value="<?php echo esc_attr($user_login); ?>" size="20" /></label>
@@ -900,8 +904,13 @@ default:
 <?php endif; ?>
 </p>
 <?php } ?>
-
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript">
+$(function(){
+	$('#wp-cert-login').click(function() {
+		window.location.href = "./wp-cert-login.php";
+	});
+});
 function wp_attempt_focus(){
 setTimeout( function(){ try{
 <?php if ( $user_login || $interim_login ) { ?>

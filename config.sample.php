@@ -1,4 +1,7 @@
 <?php
+function isDebugging() {
+	return true;
+}
 function getMySQLUser() {
 	return "{MY_SQL_USERNAME}";
 }
@@ -16,5 +19,8 @@ function getHost() {
 }
 function getRootPath() {
 	return "/testing/new_website";
+}
+function getIdentifyLocation() {
+    return __DIR__ . "/gitignored/identify";
 }
 ?>
