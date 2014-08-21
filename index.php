@@ -218,7 +218,7 @@
 
                 <div class="clearfix"></div>
                 <div id="divCalendar" class="text-center">
-                    <iframe src="https://www.google.com/calendar/embed?height=600&amp;wkst=1&amp;bgcolor=%23ffffff&amp;src=vureqs56ceev2mnn89m4mern6c%40group.calendar.google.com&amp;color=%23853104&amp;ctz=America%2FLos_Angeles" style=" border-width:0 " width="800" height="600" frameborder="0" scrolling="no"></iframe>
+                    <iframe src="https://www.google.com/calendar/embed?height=600&amp;wkst=1&amp;bgcolor=%23ffffff&amp;src=vureqs56ceev2mnn89m4mern6c%40group.calendar.google.com&amp;color=%23853104&amp;ctz=America%2FNew_York" style=" border-width:0 " width="800" height="600" frameborder="0" scrolling="no"></iframe>
                 </div>
                 <div class="clearfix"></div>
             </div><!-- /.container -->
