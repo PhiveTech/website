@@ -94,7 +94,7 @@
                             <div class="carousel-caption">
                                 <!--<div class="underlay">-->
                                     <h1>Simmons Phive Alpha</h1>
-                                    <p>A whacky group of engineering and science students living in the world's most porous dormitory</p>
+                                    <p>A wacky group of engineering and science students living in the world's most porous dormitory</p>
                                     <p>
                                         <a class="btn btn-lg btn-orange" href="#templatemo-contact" role="button" style="margin: 20px;">Join Us</a> 
                                     	<!-- **chuckle** <a class="btn btn-lg btn-green" href="https://housing.mit.edu/housing/undergraduate/baker_house" target="_blank" role="button">Leave</a> -->
